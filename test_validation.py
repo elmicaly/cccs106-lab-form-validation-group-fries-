@@ -66,11 +66,11 @@ class TestScholarshipValidator(unittest.TestCase):
     def test_valid_email(self):
         self.assertEqual(
             ScholarshipValidator.validate_email("mclara.santos@my.cspc.edu.ph"),
-            "mclara.santos@cspc.edu.ph"
+            "mclara.santos@my.cspc.edu.ph"
         )
         self.assertEqual(
-            ScholarshipValidator.validate_email("  JUAN.DELACRUZ@CSPC.EDU.PH "),
-            "juan.delacruz@cspc.edu.ph"
+            ScholarshipValidator.validate_email("  JUAN.DELACRUZ@MY.CSPC.EDU.PH "),
+            "juan.delacruz@my.cspc.edu.ph"
         )
 
     def test_invalid_email_domain(self):
