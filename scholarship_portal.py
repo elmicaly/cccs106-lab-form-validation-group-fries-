@@ -60,8 +60,8 @@ class ScholarshipValidator:
 
     # Compile Regular Expressions
     NAME_REGEX = re.compile(r"^[A-Za-z\s.\-',]{2,60}$")
-    STUDENT_ID_REGEX = re.compile(r"^20\d{2}-\d{4,5}$")
-    CSPC_EMAIL_REGEX = re.compile(r"^[a-zA-Z0-9_.+-]+@cspc\.edu\.ph$")
+    STUDENT_ID_REGEX = re.compile(r"^(?:20\d{2}-\d{4,5}|\d{6,11})$")
+    CSPC_EMAIL_REGEX = re.compile(r"^[a-zA-Z0-9_.+-]+@my\.cspc\.edu\.ph$")
     PH_PHONE_REGEX = re.compile(r"^(?:\+63|0)9\d{9}$")
 
     @classmethod
@@ -87,7 +87,7 @@ class ScholarshipValidator:
     @classmethod
     def validate_student_id(cls, value: Optional[str]) -> str:
         """
-        Validates CSPC student ID format (YYYY-NNNN).
+        Validates CSPC student ID format ().
         Returns: Normalized student ID.
         Raises: IDFormatError if invalid.
         """
@@ -98,7 +98,7 @@ class ScholarshipValidator:
 
         if not cls.STUDENT_ID_REGEX.match(clean):
             raise IDFormatError(
-                "Invalid Student ID. Expected format: YYYY-NNNN (e.g., 2024-0123)."
+                "Invalid Student ID. Expected format: 6–11 digits or YYYY-NNNN."
             )
 
         return clean
@@ -141,7 +141,8 @@ class ScholarshipValidator:
 
         if not cls.CSPC_EMAIL_REGEX.match(clean):
             raise EmailDomainError(
-                "Institutional email required (must end with @cspc.edu.ph)."
+                "Institutional email required "
+                "(must end with @my.cspc.edu.ph)."
             )
 
         return clean
@@ -195,14 +196,14 @@ def main(page: ft.Page):
 
     id_field = ft.TextField(
         label="Student ID Number",
-        hint_text="e.g., 2024-0123",
+        hint_text="e.g., 2411276",
         prefix_icon=ft.Icons.BADGE_OUTLINED,
         border_radius=8
     )
 
     email_field = ft.TextField(
         label="Institutional Email",
-        hint_text="e.g., mclara.santos@cspc.edu.ph",
+        hint_text="e.g., mclara.santos@my.cspc.edu.ph",
         prefix_icon=ft.Icons.ALTERNATE_EMAIL,
         border_radius=8
     )
